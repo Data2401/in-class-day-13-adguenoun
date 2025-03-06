@@ -1,4 +1,5 @@
 ---
+Author: Adam Cherif
 title: "Intro to dplyr -  Lab"
 output: html_document
 ---
@@ -15,8 +16,9 @@ Install the `"nycflights13"` package. Load (`library()`) the package.
 You'll also need to load `tidyverse` The data frame called `flights` should now be accessible to you.
 
 ```{r}
-# install.packages("nycflights13") # once per computer 
+ install.packages("nycflights13") # once per computer 
 library(nycflights13) # every time you use it
+
 library(tidyverse)
 
 my_flights <- flights ## getting a copy of the data in the environment
@@ -26,14 +28,15 @@ my_flights <- flights ## getting a copy of the data in the environment
 1. Use functions to inspect it: how many rows and columns does it have? What are the names of the columns? Hint: Use `??flights` to search for documentation on the data set (for what the columns contain)
 
 ```{r}
-
+glimpse(my_flights)
 ```
 
 
 2. Use `dplyr` to give the data frame a new column that is the amount of time gained or lost while flying (that is: how much of the delay arriving occurred during flight, as opposed to before departing).
 
 ```{r}
-
+my_flights <- my_flights %>% 
+  mutate(NetTime =  dep_delay - arr_delay)
 ```
 
 
@@ -41,19 +44,20 @@ my_flights <- flights ## getting a copy of the data in the environment
 3. Use `dplyr` to sort your data frame in descending order by the column you just created. Remember to save this as a variable (or in the same one!)
 
 ```{r}
-
+my_flights <- my_flights %>% arrange(desc(NetTime))
 ```
 
 4. If you haven't already, do the last 2 steps in a single statement using the pipe operator. 
 
 ```{r}
+my_flights
 
 ```
 
 5. Make a histogram of the amount of time gained using the `hist()` function
 
 ```{r}
-
+hist(my_flights$NetTime)
 ```
 
 
@@ -61,6 +65,7 @@ my_flights <- flights ## getting a copy of the data in the environment
 
 ```{r}
 
+mean(my_flights$NetTime, na.rm = TRUE)
 
 ```
 
@@ -69,6 +74,9 @@ my_flights <- flights ## getting a copy of the data in the environment
 
 ```{r}
 
+hou_flights <- filter(my_flights, dest == "HOU") %>% select(origin, dest, NetTime)
+
+hou_flights
 ```
 
 
@@ -76,7 +84,7 @@ my_flights <- flights ## getting a copy of the data in the environment
 
 
 ```{r}
-
+mean(hou_flights$NetTime, na.rm = TRUE) 
 
 ```
 
@@ -87,6 +95,8 @@ my_flights <- flights ## getting a copy of the data in the environment
 Go back to our flights exercise data. Consider flights from JFK to SEA. What was the average, min, and max air time of those flights? Use pipes to answer this question in one statement (without showing any other data)!
 
 ```{r}
+my_flights %>% filter(origin == 'JFK',dest == 'SEA') %>% select(air_time) %>% na.omit() %>%  
+summarize(mean(air_time), min(air_time), max(air_time))
 
 
 ```
