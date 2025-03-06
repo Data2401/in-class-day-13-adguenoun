@@ -16,7 +16,7 @@ Install the `"nycflights13"` package. Load (`library()`) the package.
 You'll also need to load `tidyverse` The data frame called `flights` should now be accessible to you.
 
 ```{r}
- install.packages("nycflights13") # once per computer 
+# install.packages("nycflights13") # once per computer 
 library(nycflights13) # every time you use it
 
 library(tidyverse)
@@ -104,7 +104,7 @@ summarize(mean(air_time), min(air_time), max(air_time))
 Consider flights coming into Houston (HOU and IAH). What is the mean arrival delay by departure airport? 
 
 ```{r}
-
+my_flights %>% filter()
 
 ```
 
@@ -143,7 +143,7 @@ starwars %>% filter(species == "Human") %>% plot(mass ~ height, data = .)
 Now, change this to see the same plot for the Droids. 
 
 ```{r}
-
+starwars %>% filter(species == "Droid") %>% plot(mass ~ height, data = .)
 
 ```
 
@@ -151,8 +151,9 @@ Now, change this to see the same plot for the Droids.
 How many characters are from each planet?
 
 ```{r}
+# count characters from each unique planet
 
-
+starwars %>% group_by(homeworld) %>% count(name) %>% unique() 
 
 ```
 
