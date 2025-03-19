@@ -1,0 +1,78 @@
+---
+title: "DPLYR_Practice"
+output: html_document
+---
+
+Hello World
+
+``` {r}
+library(nycflights13)
+
+my_flights <- flights
+my_flights_practice <- flights
+
+my_flights
+```
+
+Ok now we learn
+
+```{r}
+my_flights_practice
+
+
+
+# To only see destination, origin, and carrier
+
+
+
+my_flights_practice <- my_flights_practice %>% select(dest, origin, carrier)
+
+
+my_flights_practice
+
+
+```
+
+select() is used to select certain columns in the data. 
+Used to change column order with use of *everything()*
+
+```{r}
+my_flights_practice <- my_flights_practice %>% filter(dest == 'IAH')
+
+my_flights_practice
+
+```
+
+filter() is used to isolate rows of data with matching conditions
+conditions of fliter() are (dataframe, column : logic operator : isofactor)
+if data is stored as a string, you must make sure the isofactor is also a string.
+
+```{r}
+
+# There are 2 ways to arrange from greatest to least
+# 1) desc()
+# 2) - ~~ negative sign
+my_flights <- my_flights %>% arrange(-dep_delay) %>% select(dep_delay, everything())
+
+my_flights
+
+my_flights <- my_flights %>% arrange(desc(dep_delay)) %>% select(dep_delay, everything())
+
+my_flights
+
+```
+arrange
+
+```{r}
+my_flights
+
+my_flights_practice <- my_flights %>% group_by(dest) %>% summarise( mean_dep_delay = mean(dep_delay, na.rm = TRUE))
+
+my_flights_practice
+
+my_flights_practice <- my_flights %>% group_by(dest)
+
+my_flights_practice
+
+```
+
